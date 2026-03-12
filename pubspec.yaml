@@ -30,9 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  record: 5.1.0                # Versione specifica senza il simbolo ^
-  path_provider: ^2.1.2
-  permission_handler: ^11.3.1
+  record: 5.1.0
+  record_android: 1.2.0
+  path_provider: 2.1.2
+  permission_handler: 11.3.1
 
 dev_dependencies:
   flutter_test:
@@ -86,4 +87,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
 
