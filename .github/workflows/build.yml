@@ -25,6 +25,7 @@ jobs:
         run: |
           flutter clean
           flutter pub get
+          
         
       - name: Build APK
         # Usiamo --target-platform per forzare solo Android ed evitare errori su altre piattaforme
