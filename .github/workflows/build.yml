@@ -1,17 +1,32 @@
 name: Build Android APK
-on: [push] # Parte ogni volta che carichi una modifica
+on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v4
+      
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.x'
-      - run: flutter pub get
-      - run: flutter build apk --release
+          channel: 'stable'
+          
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Build APK
+        run: flutter build apk --release --no-tree-shake-icons
+        
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # <--- VERSIONE AGGIORNATA
         with:
-          name: flow8-app
+          name: flow8-recorder-apk
           path: build/app/outputs/flutter-apk/app-release.apk
