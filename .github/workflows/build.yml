@@ -1,0 +1,17 @@
+name: Build Android APK
+on: [push] # Parte ogni volta che carichi una modifica
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+      - run: flutter pub get
+      - run: flutter build apk --release
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: flow8-app
+          path: build/app/outputs/flutter-apk/app-release.apk
