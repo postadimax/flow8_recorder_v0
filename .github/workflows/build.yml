@@ -1,7 +1,37 @@
-- name: Install dependencies
+name: Build Android APK
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+          
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
         run: |
           flutter clean
           flutter pub get
         
       - name: Build APK
-        run: flutter build apk --release --no-tree-shake-icons
+        # Usiamo --target-platform per forzare solo Android ed evitare errori su altre piattaforme
+        run: flutter build apk --release --no-tree-shake-icons --target-platform android-arm64
+        
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: flow8-recorder-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
